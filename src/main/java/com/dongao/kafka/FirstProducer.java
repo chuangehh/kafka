@@ -2,6 +2,7 @@ package com.dongao.kafka;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.Properties;
@@ -31,6 +32,8 @@ public class FirstProducer {
         // key,value 序列化
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        // set partition
+        props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, "com.dongao.kafka.partition.OnePartition");
 
         // 2.get produce
         Producer<String, String> producer = new KafkaProducer<>(props);

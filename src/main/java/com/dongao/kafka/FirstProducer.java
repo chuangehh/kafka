@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -34,6 +35,8 @@ public class FirstProducer {
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         // set partition
         props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, "com.dongao.kafka.partition.OnePartition");
+        // set interceptors
+        props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, Arrays.asList("com.dongao.kafka.interceptor.TimeInterceptor","com.dongao.kafka.interceptor.CountInterceptor"));
 
         // 2.get produce
         Producer<String, String> producer = new KafkaProducer<>(props);
